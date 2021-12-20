@@ -1,0 +1,20 @@
+version: '3.1'
+volumes:
+  backupcube: {}
+  #s3backup_wp:
+    #external: true
+services:
+  s3backup:
+    #image: saklyayoub/backupcube
+    container_name: backupcube
+    #build: ./
+    user: "0:0"
+    #links:
+    #  - db:db
+    external_links:
+      - mysql:db
+    volumes:
+      - wp:/input
+      - backupcube:/output
+      - .env:/.env
+    network_mode: bridge
